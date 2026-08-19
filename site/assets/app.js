@@ -123,10 +123,16 @@ function sortableTable(cols, rows, opts) {
 }
 function csvButton(nome, cols, rows) {
   const b = el("button",{class:"ghost"},"Exportar CSV");
-  b.onclick = () => {
+  b.onclick = async () => {
     const esc = s => `"${String(s==null?"":s).replace(/"/g,'""')}"`;
     const csv = [cols.map(c=>esc(c.label)).join(";")]
       .concat(rows.map(r=>cols.map(c=>esc(r[c.k])).join(";"))).join("\n");
+    // No viewer de artifacts do claude.ai, downloads passam pela capability;
+    // no site estático (GitHub Pages/local), via Blob.
+    if (window.claude && typeof window.claude.use === "function") {
+      const dl = await window.claude.use("downloads");
+      if (dl) { try { await dl.save({filename:nome, data:"﻿"+csv}); } catch (e) {} return; }
+    }
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob(["﻿"+csv],{type:"text/csv"}));
     a.download = nome; a.click();
