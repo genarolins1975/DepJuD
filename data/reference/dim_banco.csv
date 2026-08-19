@@ -1,0 +1,15 @@
+cnpj_raiz,nome_curto,nome_instituicao,tipo_controle,uf_sede,segmento_prudencial,segmento_status,observacao
+00000000,Banco do Brasil,BCO DO BRASIL S.A.,publico_federal,DF,S1,confirmado_divulgacao_publica,Sociedade de economia mista federal
+00000208,BRB,BRB - BCO DE BRASILIA S.A.,publico_distrital,DF,n/d,a_confirmar_ifdata,Controlado pelo Governo do Distrito Federal
+00360305,Caixa,CAIXA ECONOMICA FEDERAL,publico_federal,DF,S1,confirmado_divulgacao_publica,Empresa publica federal
+04902979,Banco da Amazônia,BCO DA AMAZONIA S.A.,publico_federal,PA,n/d,a_confirmar_ifdata,Banco regional federal
+04913711,Banpará,BCO DO EST. DO PA S.A.,publico_estadual,PA,n/d,a_confirmar_ifdata,Controlado pelo Estado do Pará
+07237373,Banco do Nordeste,BCO DO NORDESTE DO BRASIL S.A.,publico_federal,CE,n/d,a_confirmar_ifdata,Banco regional federal
+13009717,Banese,BCO DO EST. DE SE S.A.,publico_estadual,SE,n/d,a_confirmar_ifdata,Controlado pelo Estado de Sergipe
+17184037,Mercantil do Brasil,BCO MERCANTIL DO BRASIL S.A.,privado,MG,n/d,a_confirmar_ifdata,
+28127603,Banestes,BCO BANESTES S.A.,publico_estadual,ES,n/d,a_confirmar_ifdata,Controlado pelo Estado do Espírito Santo
+28195667,ABC Brasil,BCO ABC BRASIL S.A.,privado,SP,n/d,a_confirmar_ifdata,
+60701190,Itaú Unibanco,ITAÚ UNIBANCO S.A.,privado,SP,S1,confirmado_divulgacao_publica,
+60746948,Bradesco,BCO BRADESCO S.A.,privado,SP,S1,confirmado_divulgacao_publica,
+90400888,Santander,BCO SANTANDER (BRASIL) S.A.,privado,SP,S1,confirmado_divulgacao_publica,
+92702067,Banrisul,BCO DO ESTADO DO RS S.A.,publico_estadual,RS,n/d,a_confirmar_ifdata,Controlado pelo Estado do Rio Grande do Sul

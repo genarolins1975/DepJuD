@@ -1,0 +1,16 @@
+sigla,nome,codigo_cnj,segmento,uf
+TJDFT,Tribunal de Justiça do Distrito Federal e dos Territórios,8.07,Justiça Estadual/DF,DF
+TJBA,Tribunal de Justiça da Bahia,8.05,Justiça Estadual,BA
+TJAL,Tribunal de Justiça de Alagoas,8.02,Justiça Estadual,AL
+TJPB,Tribunal de Justiça da Paraíba,8.15,Justiça Estadual,PB
+TJMA,Tribunal de Justiça do Maranhão,8.10,Justiça Estadual,MA
+TJSP,Tribunal de Justiça de São Paulo,8.26,Justiça Estadual,SP
+TJRS,Tribunal de Justiça do Rio Grande do Sul,8.21,Justiça Estadual,RS
+TJES,Tribunal de Justiça do Espírito Santo,8.08,Justiça Estadual,ES
+TJSE,Tribunal de Justiça de Sergipe,8.25,Justiça Estadual,SE
+TJPA,Tribunal de Justiça do Pará,8.14,Justiça Estadual,PA
+TJPI,Tribunal de Justiça do Piauí,8.18,Justiça Estadual,PI
+TJPE,Tribunal de Justiça de Pernambuco,8.17,Justiça Estadual,PE
+CJF,Conselho da Justiça Federal,4,Justiça Federal,BR
+CSJT,Conselho Superior da Justiça do Trabalho,5,Justiça do Trabalho,BR
+JF-TRIB,Justiça Federal — depósitos tributários (Lei 9.703/1998),4,Justiça Federal,BR

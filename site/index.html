@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observatório dos Depósitos Judiciais</title>
+<style>
+:root{
+  color-scheme: light;
+  --page:#f9f9f7; --surface:#fcfcfb; --ink:#0b0b0b; --ink2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --baseline:#c3c2b7; --border:rgba(11,11,11,.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s7:#4a3aa7; --s8:#e34948;
+  --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --critical:#d03b3b;
+  --accent:#2a78d6; --wash:rgba(42,120,214,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --page:#0d0d0d; --surface:#1a1a19; --ink:#ffffff; --ink2:#c3c2b7; --muted:#898781;
+    --grid:#2c2c2a; --baseline:#383835; --border:rgba(255,255,255,.10);
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s7:#9085e9; --s8:#e66767;
+    --accent:#3987e5; --wash:rgba(57,135,229,.12);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --page:#0d0d0d; --surface:#1a1a19; --ink:#ffffff; --ink2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --baseline:#383835; --border:rgba(255,255,255,.10);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s7:#9085e9; --s8:#e66767;
+  --accent:#3987e5; --wash:rgba(57,135,229,.12);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);
+  font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;}
+header.site{border-bottom:1px solid var(--border);background:var(--surface);
+  padding:20px 24px 0;position:sticky;top:0;z-index:40}
+header.site h1{margin:0;font-size:19px;font-weight:650;letter-spacing:-.01em}
+header.site .sub{color:var(--ink2);font-size:13px;margin:2px 0 12px}
+nav.tabs{display:flex;gap:2px;flex-wrap:wrap}
+nav.tabs button{appearance:none;border:0;background:none;color:var(--ink2);cursor:pointer;
+  font:inherit;font-size:13.5px;padding:8px 12px;border-bottom:2px solid transparent}
+nav.tabs button:hover{background:var(--wash)}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+main{max-width:1180px;margin:0 auto;padding:24px}
+section.page{display:none}
+section.page.active{display:block}
+h2{font-size:22px;margin:8px 0 4px;letter-spacing:-.01em}
+h3{font-size:16px;margin:26px 0 6px}
+p.lead{color:var(--ink2);margin:0 0 18px;max-width:74ch}
+.note{color:var(--ink2);font-size:13px;max-width:80ch}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin:16px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px}
+.card .label{font-size:13px;color:var(--ink2)}
+.card .value{font-size:44px;font-weight:650;letter-spacing:-.02em;line-height:1.1;margin:4px 0 2px}
+.card .value small{font-size:20px;font-weight:600;color:var(--ink2)}
+.card .meta{font-size:12px;color:var(--muted)}
+.card .delta{font-size:13px;font-weight:600}
+.card.small .value{font-size:28px}
+.kpirow{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:14px 0}
+.chart{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:14px 10px 6px;margin:14px 0}
+.chart .title{font-size:14px;font-weight:600;padding:0 8px}
+.chart .subtitle{font-size:12.5px;color:var(--ink2);padding:0 8px;margin-bottom:4px}
+.chart .plot{width:100%;height:340px}
+.chart .plot.tall{height:430px}
+.chart .plot.short{height:260px}
+.tablewrap{overflow-x:auto;background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;margin:14px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:640px}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--grid);vertical-align:top}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+th{color:var(--ink2);font-weight:600;font-size:12.5px;position:sticky;top:0;background:var(--surface)}
+th.sortable{cursor:pointer}
+th.sortable:hover{color:var(--ink)}
+tr:hover td{background:var(--wash)}
+tr:last-child td{border-bottom:0}
+.pill{display:inline-block;border-radius:999px;padding:1px 9px;font-size:11.5px;font-weight:600;
+  border:1px solid var(--border);color:var(--ink2);white-space:nowrap}
+.pill.ok{color:var(--good);border-color:currentColor}
+.pill.warn{color:#8a6100;border-color:currentColor}
+:root[data-theme="dark"] .pill.warn{color:var(--warn)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pill.warn{color:var(--warn)}}
+.pill.serious{color:var(--serious);border-color:currentColor}
+.pill.critical{color:var(--critical);border-color:currentColor}
+.flag{border-left:3px solid var(--serious);padding:10px 14px;background:var(--surface);
+  border-radius:0 8px 8px 0;margin:10px 0;border-top:1px solid var(--border);
+  border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.flag b{font-size:14px}
+.flag .src{font-size:12px;color:var(--muted)}
+.aviso{border:1px solid var(--border);border-left:3px solid var(--warn);border-radius:0 8px 8px 0;
+  background:var(--surface);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--ink2)}
+.aviso b{color:var(--ink)}
+.timeline{list-style:none;margin:14px 0;padding:0;border-left:2px solid var(--baseline)}
+.timeline li{margin:0 0 16px 0;padding:0 0 0 18px;position:relative}
+.timeline li::before{content:"";position:absolute;left:-6px;top:6px;width:10px;height:10px;
+  border-radius:50%;background:var(--accent);border:2px solid var(--surface)}
+.timeline .d{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.timeline .t{font-size:14px}
+.timeline .s{font-size:12px;color:var(--muted)}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0}
+.filters select,.filters input{font:inherit;font-size:13px;padding:6px 10px;border-radius:8px;
+  border:1px solid var(--border);background:var(--surface);color:var(--ink)}
+button.linkish{appearance:none;border:0;background:none;color:var(--accent);cursor:pointer;
+  font:inherit;font-size:12.5px;padding:0;text-decoration:underline}
+button.ghost{appearance:none;border:1px solid var(--border);background:var(--surface);color:var(--ink2);
+  cursor:pointer;font:inherit;font-size:12.5px;padding:5px 12px;border-radius:8px}
+button.ghost:hover{background:var(--wash);color:var(--ink)}
+dialog{border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--ink);
+  max-width:720px;width:92vw;padding:22px;box-shadow:0 18px 50px rgba(0,0,0,.25)}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+dialog h4{margin:0 0 8px;font-size:16px}
+dialog .kv{display:grid;grid-template-columns:170px 1fr;gap:4px 14px;font-size:13.5px;margin:12px 0}
+dialog .kv div:nth-child(odd){color:var(--ink2)}
+dialog code{font-size:12.5px;background:var(--wash);padding:1px 5px;border-radius:5px;word-break:break-all}
+.selo{font-size:11px;letter-spacing:.02em;text-transform:uppercase;color:var(--muted)}
+footer{border-top:1px solid var(--border);color:var(--muted);font-size:12.5px;
+  padding:18px 24px;margin-top:30px}
+a{color:var(--accent)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.defs dt{font-weight:600;margin-top:12px}
+.defs dd{margin:2px 0 0 0;color:var(--ink2);font-size:14px;max-width:80ch}
+.fluxo{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0;font-size:13px}
+.fluxo .step{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 12px}
+.fluxo .arr{color:var(--muted)}
+</style>
+</head>
+<body>
+<header class="site">
+  <h1>Observatório Nacional dos Depósitos Judiciais</h1>
+  <div class="sub">Ferramenta pública de investigação e análise · fonte primária: Banco Central do Brasil (balancetes, doc. 4010) · <span id="hd-database"></span></div>
+  <nav class="tabs" role="tablist" id="tabs"></nav>
+</header>
+<main id="main"></main>
+<footer>
+  Todos os agregados incluem depósitos <b>judiciais e administrativos</b> (a fonte contábil não permite separá-los).
+  Nenhum valor é estimado ou interpolado; ausência de informação é tratada como “não disponível”, nunca como zero.
+  Red flag é sinal para investigação e não prova de irregularidade.
+  · <span id="ft-gen"></span>
+</footer>
+<dialog id="modal"></dialog>
+<script src="data/data.js"></script>
+<script src="assets/echarts.min.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

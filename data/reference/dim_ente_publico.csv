@@ -1,0 +1,4 @@
+ente_id,nome,esfera,conta_cosif_repasse,marco_legal_repasse,observacao
+uniao,União,federal,9.0.9.07 (9090700005),"Lei 14.973/2024 arts. 35-40 (revogou a Lei 9.703/1998)","Depósitos judiciais e administrativos em processos com a União creditados diretamente na Conta Única do Tesouro (antes da Lei 14.973/2024, apenas tributos federais — Lei 9.703/1998)"
+estados_df,Estados e Distrito Federal,estadual,9.0.9.08 (9090800008),"LC 151/2015; leis estaduais","Transferência de percentual dos depósitos tributários (e em alguns estados não tributários) ao ente, com fundo de reserva"
+municipios,Municípios,municipal,9.0.9.09 (9090900001),"LC 151/2015","Transferência de percentual dos depósitos tributários ao ente, com fundo de reserva"
