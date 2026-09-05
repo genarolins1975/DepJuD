@@ -1,5 +1,5 @@
 {
-  "executado_em_utc": "2026-08-19T14:44:57+00:00",
+  "executado_em_utc": "2026-09-05T12:16:24+00:00",
   "resultado_geral": "VALIDO",
   "checks": [
     {
@@ -90,7 +90,7 @@
     {
       "check": "cobertura_serie",
       "resultado": "PASSOU",
-      "detalhe": "15 meses no staging (202501–202603); nao disponiveis: ['202604', '202605']"
+      "detalhe": "17 meses no staging (202501–202605); nao disponiveis: nenhum"
     }
   ],
   "issues": []
